@@ -1,0 +1,22 @@
+# Gowin FPGA Pin Constraints
+# I2C Slave Implementation
+# Target: TBD - Update with specific Gowin device
+
+# NOTE: This is a placeholder file for future Gowin FPGA support
+# Update pin locations and IO standards based on your target board
+
+# 50MHz clock input
+# IO_LOC "clk" XX;
+# IO_PORT "clk" PULL_MODE=UP IO_TYPE=LVCMOS33;
+
+# LED output
+# IO_LOC "led" XX;
+# IO_PORT "led" PULL_MODE=NONE IO_TYPE=LVCMOS33 DRIVE=8;
+
+# I2C SCL pin
+# IO_LOC "scl" XX;
+# IO_PORT "scl" PULL_MODE=UP IO_TYPE=LVCMOS33;
+
+# I2C SDA pin
+# IO_LOC "sda" XX;
+# IO_PORT "sda" PULL_MODE=UP IO_TYPE=LVCMOS33 OPEN_DRAIN=ON;

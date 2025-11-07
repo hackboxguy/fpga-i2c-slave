@@ -1,0 +1,39 @@
+# Lattice ECP5 UM-45K Pin Constraints
+# I2C Slave Implementation - Optimized for high-speed operation
+# Target: LAE5UM-45F custom board
+
+# 50MHz oscillator input
+LOCATE COMP "clk" SITE "U16";
+IOBUF PORT "clk" IO_TYPE=LVCMOS33;
+
+# LED output
+LOCATE COMP "led" SITE "A12";
+IOBUF PORT "led" IO_TYPE=LVCMOS33 DRIVE=8 SLEW=SLOW;
+
+# I2C pins with optimized settings for high-speed operation
+LOCATE COMP "scl" SITE "B15";
+IOBUF PORT "scl" IO_TYPE=LVCMOS33 PULLMODE=UP CLAMP=ON HYSTERESIS=ON;
+
+LOCATE COMP "sda" SITE "C15";
+IOBUF PORT "sda" IO_TYPE=LVCMOS33 PULLMODE=UP CLAMP=ON HYSTERESIS=ON OPENDRAIN=ON;
+
+# Clock frequency constraint
+FREQUENCY NET "clk" 50.0 MHz;
+
+# I2C timing constraints for 400kHz operation
+# Setup/hold times based on I2C specification
+INPUT_SETUP PORT "scl" 10.0 ns HOLD 5.0 ns CLKNET "clk";
+INPUT_SETUP PORT "sda" 10.0 ns HOLD 5.0 ns CLKNET "clk";
+
+# Maximum delay constraints for I2C signals
+MAXDELAY FROM PORT "scl" TO CELL "*scl_sync*" 10.0 ns;
+MAXDELAY FROM PORT "sda" TO CELL "*sda_sync*" 10.0 ns;
+
+# Clock to output constraint for SDA
+CLOCK_TO_OUT PORT "sda" 12.0 ns CLKNET "clk";
+
+# Multicycle path for timeout counter (not critical)
+MULTICYCLE FROM CELL "*scl_timeout*" TO CELL "*scl_timeout*" 2 X;
+
+# False path for asynchronous reset
+FALSE_PATH FROM CELL "*reset_counter*" TO CELL "*";
